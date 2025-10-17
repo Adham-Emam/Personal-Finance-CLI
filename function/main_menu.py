@@ -1,5 +1,6 @@
 from function.menu_navigator import MenuNavigator
-from function.add_income.add_income import AddIncome
+from function.add_income import AddIncome
+from function.add_expense import AddExpense
 
 
 class MainMenu:
@@ -54,7 +55,7 @@ class MainMenu:
             case "1":
                 self.add_income()
             case "2":
-                print("Add Expense")
+                self.add_expense()
             case "3":
                 print("View Balance")
             case "4":
@@ -81,9 +82,10 @@ class MainMenu:
 
     def add_expense(self):
         """
-        Placeholder for Add Expense submenu.
+        Opens the Add Income submenu.
         """
-        print("Add Expense - coming soon...")
+        add_expense = AddExpense(self.username)
+        add_expense.run()
 
     def view_balance(self):
         print("View Balance - coming soon...")
