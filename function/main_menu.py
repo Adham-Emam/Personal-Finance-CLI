@@ -1,3 +1,6 @@
+import os
+import webbrowser
+import time
 from function.menu_navigator import MenuNavigator
 from function.add_income import AddIncome
 from function.add_expense import AddExpense
@@ -108,4 +111,9 @@ class MainMenu:
         print("Settings - coming soon...")
 
     def help_menu(self):
-        print("Help - coming soon...")
+        os.system("cls" if os.name == "nt" else "clear")
+        webbrowser.open(
+            "https://github.com/Adham-Emam/Personal-Finance-CLI/blob/main/README.md"
+        )
+        time.sleep(1)
+        input("Press Enter to continue...")
