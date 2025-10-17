@@ -1,21 +1,20 @@
 import sys
 from menu_navigator import MenuNavigator
+from add_income import AddIncome
 
 
 class MainMenu:
-    def __init__(self, username, balance):
+    def __init__(self, username):
         """
         Initializes the MainMenu class.
 
         Parameters:
         name (str): The user's name
-        balance (int): The user's balance
 
         Returns:
         None
         """
         self.username = username
-        self.balance = balance
         self.menu = {
             "1": "Add Income",
             "2": "Add Expense",
@@ -54,7 +53,7 @@ class MainMenu:
         """
         match choice:
             case "1":
-                print("Add Income")
+                self.add_income()
             case "2":
                 print("Add Expense")
             case "3":
@@ -71,3 +70,39 @@ class MainMenu:
                 print("Settings")
             case "9":
                 print("Help")
+
+    # ---------- Menu Actions ----------
+
+    def add_income(self):
+        """
+        Opens the Add Income submenu.
+        """
+        add_income = AddIncome(self.username)
+        add_income.run()
+
+    def add_expense(self):
+        """
+        Placeholder for Add Expense submenu.
+        """
+        print("Add Expense - coming soon...")
+
+    def view_balance(self):
+        print("View Balance - coming soon...")
+
+    def transaction_history(self):
+        print("Transaction History - coming soon...")
+
+    def edit_transaction(self):
+        print("Edit Transaction - coming soon...")
+
+    def delete_transaction(self):
+        print("Delete Transaction - coming soon...")
+
+    def reports(self):
+        print("Reports - coming soon...")
+
+    def settings(self):
+        print("Settings - coming soon...")
+
+    def help_menu(self):
+        print("Help - coming soon...")
