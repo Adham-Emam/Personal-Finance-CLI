@@ -1,6 +1,7 @@
 from function.menu_navigator import MenuNavigator
 from function.add_income import AddIncome
 from function.add_expense import AddExpense
+from function.view_balance import ViewBalance
 
 
 class MainMenu:
@@ -16,16 +17,16 @@ class MainMenu:
         """
         self.username = username
         self.menu = {
-            "1": "Add Income",
-            "2": "Add Expense",
-            "3": "View Balance",
-            "4": "Transaction History",
-            "5": "Edit Transaction",
-            "6": "Delete Transaction",
-            "7": "Reports",
-            "8": "Settings",
-            "9": "Help",
-            "0": "Exit",
+            "1": "➕ Add Income",
+            "2": "➖ Add Expense",
+            "3": "💰 View Balance",
+            "4": "📜 Transaction History",
+            "5": "✏️ Edit Transaction",
+            "6": "🗑️ Delete Transaction",
+            "7": "📊 Reports",
+            "8": "⚙️ Settings",
+            "9": "❓ Help",
+            "0": "🚪 Exit",
         }
 
     def run(self):
@@ -57,7 +58,7 @@ class MainMenu:
             case "2":
                 self.add_expense()
             case "3":
-                print("View Balance")
+                self.view_balance()
             case "4":
                 print("Transaction History")
             case "5":
@@ -69,7 +70,7 @@ class MainMenu:
             case "8":
                 print("Settings")
             case "9":
-                print("Help")
+                self.help_menu()
 
     # ---------- Menu Actions ----------
 
@@ -88,7 +89,8 @@ class MainMenu:
         add_expense.run()
 
     def view_balance(self):
-        print("View Balance - coming soon...")
+        view_balance = ViewBalance(self.username)
+        view_balance.run()
 
     def transaction_history(self):
         print("Transaction History - coming soon...")
