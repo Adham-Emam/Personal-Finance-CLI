@@ -19,10 +19,13 @@ class MainMenu:
         self.menu = {
             "1": "Add Income",
             "2": "Add Expense",
-            "3": "Balance",
+            "3": "View Balance",
             "4": "Transaction History",
             "5": "Edit Transaction",
             "6": "Delete Transaction",
+            "7": "Reports",
+            "8": "Settings",
+            "9": "Help",
             "0": "Exit",
         }
 
@@ -55,12 +58,16 @@ class MainMenu:
             case "2":
                 print("Add Expense")
             case "3":
-                print("Balance")
+                print("View Balance")
             case "4":
-                print("Transfer")
+                print("Transaction History")
             case "5":
-                print("History")
-
-
-s = MainMenu("John", 1000)
-s.run()
+                print("Edit Transaction")
+            case "6":
+                print("Delete Transaction")
+            case "7":
+                print("Reports")
+            case "8":
+                print("Settings")
+            case "9":
+                print("Help")
