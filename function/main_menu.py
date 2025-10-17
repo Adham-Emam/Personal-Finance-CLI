@@ -92,6 +92,14 @@ class MainMenu:
         add_expense.run()
 
     def view_balance(self):
+        """
+        Opens the View Balance submenu.
+
+        This menu item will display the user's current balance by calculating the total income and total expense from the transactions CSV file.
+
+        Returns:
+        None
+        """
         view_balance = ViewBalance(self.username)
         view_balance.run()
 
@@ -111,6 +119,12 @@ class MainMenu:
         print("Settings - coming soon...")
 
     def help_menu(self):
+        """
+        Opens the GitHub Documentation page for the Personal Finance CLI project.
+
+        Clears the console, opens the README page in the default web browser,
+        waits for a second, and then prompts the user to press Enter to continue.
+        """
         os.system("cls" if os.name == "nt" else "clear")
         webbrowser.open(
             "https://github.com/Adham-Emam/Personal-Finance-CLI/blob/main/README.md"
