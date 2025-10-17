@@ -1,6 +1,5 @@
-import sys
-from menu_navigator import MenuNavigator
-from add_income import AddIncome
+from function.menu_navigator import MenuNavigator
+from function.add_income.add_income import AddIncome
 
 
 class MainMenu:

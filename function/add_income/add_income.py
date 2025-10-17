@@ -17,7 +17,7 @@ class AddIncome:
         All inputs are validated before saving.
         """
         amount = self.get_valid_amount()
-        category = self.get_non_empty_input("Enter the category of the transaction: ")
+        category = self.get_valid_category()
         description = input(
             "Enter the description of the transaction (optional): "
         ).strip()
@@ -58,15 +58,19 @@ class AddIncome:
             except ValueError:
                 print("Invalid input. Please enter a numeric value.")
 
-    def get_non_empty_input(self, prompt):
+    def get_valid_category(self):
         """
         Prompts user for a non-empty input string.
         """
         while True:
-            value = input(prompt).strip()
-            if value:
-                return value
-            print("This field cannot be empty.")
+            value = input("Enter the category of the transaction: ").strip()
+
+            if not value:
+                print("This field cannot be empty.")
+            if not value.isalpha():
+                print("This field can only contain letters.")
+
+            return value
 
     def get_valid_date(self):
         """
@@ -108,4 +112,5 @@ class AddIncome:
         """
         Entry point for running this menu.
         """
+        os.system("cls" if os.name == "nt" else "clear")
         self.add_income()
