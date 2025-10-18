@@ -5,6 +5,7 @@ from function.menu_navigator import MenuNavigator
 from function.add_income import AddIncome
 from function.add_expense import AddExpense
 from function.view_balance import ViewBalance
+from function.transactions.transaction_history import TransactionHistory
 
 
 class MainMenu:
@@ -63,7 +64,7 @@ class MainMenu:
             case "3":
                 self.view_balance()
             case "4":
-                print("Transaction History")
+                self.transaction_history()
             case "5":
                 print("Edit Transaction")
             case "6":
@@ -104,7 +105,16 @@ class MainMenu:
         view_balance.run()
 
     def transaction_history(self):
-        print("Transaction History - coming soon...")
+        """
+        Opens the Transaction History submenu.
+
+        This menu item will display all transactions for the given user.
+
+        Returns:
+        None
+        """
+        transaction_menu = TransactionHistory(self.username)
+        transaction_menu.run()
 
     def edit_transaction(self):
         print("Edit Transaction - coming soon...")
