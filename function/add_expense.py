@@ -67,8 +67,13 @@ class AddExpense:
 
             if not value:
                 print("This field cannot be empty.")
+                continue
             if not value.isalpha():
                 print("This field can only contain letters.")
+                continue
+            if not 3 <= len(value) <= 20:
+                print("This field must be between 3 and 20 characters.")
+                continue
 
             return value
 
