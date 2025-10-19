@@ -1,6 +1,7 @@
 import pyfiglet
 import os
 from function.main_menu import MainMenu
+from function.auth import Authenticator
 
 
 def main():
@@ -9,9 +10,10 @@ def main():
     ascii_art = pyfiglet.figlet_format("Welcome Back!", font="slant")
     print(ascii_art)
 
-    username = input("Enter your name: ")
-    main_menu = MainMenu(username)
-    main_menu.run()
+    auth = Authenticator()
+    username = auth.run()
+    if username:
+        MainMenu(username).run()
 
 
 if __name__ == "__main__":
