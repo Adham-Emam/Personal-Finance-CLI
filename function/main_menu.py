@@ -5,6 +5,9 @@ from function.menu_navigator import MenuNavigator
 from function.add_income import AddIncome
 from function.add_expense import AddExpense
 from function.view_balance import ViewBalance
+from function.transactions.transaction_history import TransactionHistory
+from function.transactions.edit_transaction import EditTransaction
+from function.transactions.delete_transaction import DeleteTransaction
 
 
 class MainMenu:
@@ -63,11 +66,11 @@ class MainMenu:
             case "3":
                 self.view_balance()
             case "4":
-                print("Transaction History")
+                self.transaction_history()
             case "5":
-                print("Edit Transaction")
+                self.edit_transaction()
             case "6":
-                print("Delete Transaction")
+                self.delete_transaction()
             case "7":
                 print("Reports")
             case "8":
@@ -104,13 +107,40 @@ class MainMenu:
         view_balance.run()
 
     def transaction_history(self):
-        print("Transaction History - coming soon...")
+        """
+        Opens the Transaction History submenu.
+
+        This menu item will display all transactions for the given user.
+
+        Returns:
+        None
+        """
+        transaction_menu = TransactionHistory(self.username)
+        transaction_menu.run()
 
     def edit_transaction(self):
-        print("Edit Transaction - coming soon...")
+        """
+        Opens the Edit Transaction submenu.
+
+        This menu item will allow the user to edit a specific transaction by ID.
+
+        Returns:
+        None
+        """
+        edit_transaction = EditTransaction(self.username)
+        edit_transaction.run()
 
     def delete_transaction(self):
-        print("Delete Transaction - coming soon...")
+        """
+        Opens the Delete Transaction submenu.
+
+        This menu item will allow the user to delete a specific transaction by ID.
+
+        Returns:
+        None
+        """
+        delete_transaction = DeleteTransaction(self.username)
+        delete_transaction.run()
 
     def reports(self):
         print("Reports - coming soon...")

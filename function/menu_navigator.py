@@ -75,5 +75,5 @@ class MenuNavigator:
             os.system("cls" if os.name == "nt" else "clear")
             sys.exit()
         else:
-            print("Returning to main menu...")
+            print("Returning back...")
             time.sleep(2)
