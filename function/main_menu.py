@@ -7,6 +7,7 @@ from function.add_expense import AddExpense
 from function.view_balance import ViewBalance
 from function.transactions.transaction_history import TransactionHistory
 from function.transactions.edit_transaction import EditTransaction
+from function.transactions.delete_transaction import DeleteTransaction
 
 
 class MainMenu:
@@ -69,7 +70,7 @@ class MainMenu:
             case "5":
                 self.edit_transaction()
             case "6":
-                print("Delete Transaction")
+                self.delete_transaction()
             case "7":
                 print("Reports")
             case "8":
@@ -130,7 +131,16 @@ class MainMenu:
         edit_transaction.run()
 
     def delete_transaction(self):
-        print("Delete Transaction - coming soon...")
+        """
+        Opens the Delete Transaction submenu.
+
+        This menu item will allow the user to delete a specific transaction by ID.
+
+        Returns:
+        None
+        """
+        delete_transaction = DeleteTransaction(self.username)
+        delete_transaction.run()
 
     def reports(self):
         print("Reports - coming soon...")
