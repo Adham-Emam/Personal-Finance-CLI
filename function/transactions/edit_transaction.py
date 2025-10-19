@@ -78,11 +78,11 @@ class EditTransaction:
             menu.print_menu()
             choice = menu.choice()
             self.handle_choice(choice, transaction_id)
-            if choice in {"7"}:
+            if choice == "7":
                 print("Returning to main menu...")
                 time.sleep(2)
                 break
-            elif choice in {"0"}:
+            elif choice == "0":
                 print("Exiting...")
                 time.sleep(2)
                 MenuNavigator.exit()
