@@ -9,7 +9,10 @@ class AddExpense:
         Handles adding expense transactions for a given user.
         """
         self.username = username
-        self.file_path = "database/transactions.csv"
+        self.file_path = f"database/{username}/transactions.csv"
+
+        if not os.path.exists(f"database/{username}"):
+            os.mkdir(f"database/{username}")
 
     def add_expense(self):
         """
@@ -40,8 +43,6 @@ class AddExpense:
             print("\n✅ Transaction added successfully.")
         else:
             print("\n❌ Transaction not added.")
-
-    # ---------- Helper Methods ----------
 
     def get_valid_amount(self):
         """
@@ -106,12 +107,9 @@ class AddExpense:
         with open(self.file_path, "a", newline="") as file:
             writer = csv.writer(file)
             if not file_exists:
-                writer.writerow(
-                    ["username", "amount", "category", "description", "date", "type"]
-                )
+                writer.writerow(["amount", "category", "description", "date", "type"])
             writer.writerow(
                 [
-                    self.username,
                     amount,
                     category,
                     description,

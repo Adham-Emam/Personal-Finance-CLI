@@ -28,6 +28,9 @@ class TransactionHistory:
         Returns:
         None
         """
+        if self.view_transactions.transactions is None:
+            return
+
         while True:
             os.system("cls" if os.name == "nt" else "clear")
             print(f"🧾 Transaction History for {self.username}\n" + "=" * 40)

@@ -1,5 +1,6 @@
 import os
 import csv
+import time
 
 
 class ViewBalance:
@@ -14,7 +15,7 @@ class ViewBalance:
         None
         """
         self.username = username
-        self.file_path = "database/transactions.csv"
+        self.file_path = f"database/{username}/transactions.csv"
 
     def calculate_balance(self):
         """
@@ -26,28 +27,39 @@ class ViewBalance:
         """
         total_income = 0
         total_expense = 0
-        with open(self.file_path, "r") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                if row["username"] == self.username:
+        try:
+            with open(self.file_path, "r") as file:
+                reader = csv.DictReader(file)
+                for row in reader:
                     if row["type"] == "income":
                         total_income += int(row["amount"])
                     elif row["type"] == "expense":
                         total_expense += int(row["amount"])
-        return total_income, total_expense
+            return total_income, total_expense
+        except FileNotFoundError:
+            print(
+                f"No transactions found for user '{self.username}'."
+                f" Please add transactions first."
+            )
+            time.sleep(2)
+            return None
 
     def run(self):
         """
-        Clears the console, calculates the user's total income and expense, and then prints out a balance summary.
+        Prints the user's current balance.
 
-        This includes the total income, total expense, and the current balance.
+        This function will clear the console, calculate the user's total income and expense from the transactions CSV file, and then print out the balance summary.
 
-        After printing out the balance summary, it waits for the user to press Enter before continuing.
+        If no transactions are found for the given user, it will print a message indicating so and wait for the user to press Enter before continuing.
+
+        Returns:
+        None
         """
         os.system("cls" if os.name == "nt" else "clear")
-        total_income, total_expense = self.calculate_balance()
-        print("💰 Balance Summary")
-        print(f"Total Income: {total_income}$")
-        print(f"Total Expense: {total_expense}$")
-        print(f"Current Balance: {total_income - total_expense}$")
-        input("Press Enter to continue...")
+        if not self.calculate_balance() is None:
+            total_income, total_expense = self.calculate_balance()
+            print("💰 Balance Summary")
+            print(f"Total Income: {total_income}$")
+            print(f"Total Expense: {total_expense}$")
+            print(f"Current Balance: {total_income - total_expense}$")
+            input("Press Enter to continue...")

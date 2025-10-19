@@ -1,6 +1,7 @@
 from colorama import Fore, Style, init
 import os
 import csv
+import time
 import datetime
 
 
@@ -10,9 +11,9 @@ init(autoreset=True)  # ensure color resets automatically
 class ViewTransactions:
     def __init__(self, username):
         self.username = username
-        self.file_path = "database/transactions.csv"
-        self.transactions = []
+        self.file_path = f"database/{username}/transactions.csv"
         self.search_term = None
+        self.transactions = self.get_transactions()
 
     def get_transactions(self):
         """
@@ -23,17 +24,21 @@ class ViewTransactions:
         Returns:
         list: A list of all transactions for the given user.
         """
-        self.transactions.clear()
         self.search_term = None
+        transactions = []
         try:
             with open(self.file_path, "r") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
-                    if row["username"] == self.username:
-                        self.transactions.append(row)
+                    transactions.append(row)
+            return transactions
         except FileNotFoundError:
-            pass
-        return self.transactions
+            print(
+                f"No transactions found for user '{self.username}'."
+                f" Please add transactions first."
+            )
+            time.sleep(2)
+            return None
 
     def filter_category(self):
         """
@@ -46,9 +51,6 @@ class ViewTransactions:
         list: A list of all transactions for the given user and category.
         """
         os.system("cls" if os.name == "nt" else "clear")
-
-        self.transactions.clear()
-        self.get_transactions()
 
         while True:
             category = input("Enter the category to filter by: ").strip()
@@ -81,9 +83,6 @@ class ViewTransactions:
         list: A list of all transactions for the given user and date range.
         """
         os.system("cls" if os.name == "nt" else "clear")
-
-        self.transactions.clear()
-        self.get_transactions()
 
         start_date, end_date = self.get_date_inputs()
 
@@ -162,8 +161,6 @@ class ViewTransactions:
             f"Sort transaction by:\n1. Date Sorted\n2. Latest Transactions\n3. Amount ascending\n4. Amount descending"
         )
 
-        self.get_transactions()
-
         while True:
             option = input("Enter the number of the option: ").strip()
 
@@ -205,7 +202,6 @@ class ViewTransactions:
         list: A list of all transactions for the given user and search query.
         """
         os.system("cls" if os.name == "nt" else "clear")
-        self.get_transactions()
 
         while True:
             search_term = input("Enter the search query: ").strip()
@@ -273,6 +269,9 @@ class ViewTransactions:
         After printing out all transactions, it will wait for the user to press Enter before continuing.
         """
         os.system("cls" if os.name == "nt" else "clear")
+
+        if self.transactions is None:
+            return
 
         if self.transactions:
             print(f"📄 Transactions for user: {self.username}\n" + "=" * 35)
