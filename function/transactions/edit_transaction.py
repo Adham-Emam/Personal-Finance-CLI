@@ -57,7 +57,13 @@ class EditTransaction:
             print("-" * 30)
 
         while True:
-            transaction_id = input("Enter the ID of the transaction to edit: ")
+            transaction_id = input(
+                "Enter the ID of the transaction to edit or type '0' to go back: "
+            )
+
+            if int(transaction_id) == 0:
+                return
+
             if not transaction_id.isdigit():
                 print("Invalid input. Please enter a valid transaction ID.")
                 continue
