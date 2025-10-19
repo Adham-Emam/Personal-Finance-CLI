@@ -6,6 +6,7 @@ from function.add_income import AddIncome
 from function.add_expense import AddExpense
 from function.view_balance import ViewBalance
 from function.transactions.transaction_history import TransactionHistory
+from function.transactions.edit_transaction import EditTransaction
 
 
 class MainMenu:
@@ -66,7 +67,7 @@ class MainMenu:
             case "4":
                 self.transaction_history()
             case "5":
-                print("Edit Transaction")
+                self.edit_transaction()
             case "6":
                 print("Delete Transaction")
             case "7":
@@ -117,7 +118,16 @@ class MainMenu:
         transaction_menu.run()
 
     def edit_transaction(self):
-        print("Edit Transaction - coming soon...")
+        """
+        Opens the Edit Transaction submenu.
+
+        This menu item will allow the user to edit a specific transaction by ID.
+
+        Returns:
+        None
+        """
+        edit_transaction = EditTransaction(self.username)
+        edit_transaction.run()
 
     def delete_transaction(self):
         print("Delete Transaction - coming soon...")
