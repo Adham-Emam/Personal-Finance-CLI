@@ -1,4 +1,5 @@
 from colorama import Fore, Style, init
+from tabulate import tabulate
 import os
 import csv
 import time
@@ -274,15 +275,20 @@ class ViewTransactions:
             return
 
         if self.transactions:
-            print(f"📄 Transactions for user: {self.username}\n" + "=" * 35)
+            headers = ["Date", "Type", "Amount", "Category", "Description"]
 
-            for transaction in self.transactions:
-                print(f"Date: {self.highlight(transaction['date'])}")
-                print(f"Type: {self.highlight(transaction['type'])}")
-                print(f"Amount: {self.highlight(transaction['amount'])}")
-                print(f"Category: {self.highlight(transaction['category'])}")
-                print(f"Description: {self.highlight(transaction['description'])}")
-                print("-" * 30)
+            table_data = [
+                [
+                    self.highlight(t["date"]),
+                    self.highlight(t["type"]),
+                    self.highlight(t["amount"]),
+                    self.highlight(t["category"]),
+                    self.highlight(t["description"]),
+                ]
+                for t in self.transactions
+            ]
+            print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
+
         else:
             print("No transactions found.")
         input("Press Enter to continue...")

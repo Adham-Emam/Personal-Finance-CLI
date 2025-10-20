@@ -2,6 +2,7 @@ import os
 import csv
 import time
 import datetime
+from tabulate import tabulate
 from function.menu_navigator import MenuNavigator
 
 
@@ -45,16 +46,21 @@ class EditTransaction:
         if self.transactions is None:
             return
 
-        for i, transaction in enumerate(self.transactions, 1):
-            print(
-                f"ID: {i}\n"
-                f"Type: {transaction[4]}\n"
-                f"Category: {transaction[1]}\n"
-                f"Amount: {transaction[0]}\n"
-                f"Date: {transaction[3]}\n"
-                f"Description: {transaction[2]}"
-            )
-            print("-" * 30)
+        headers = ["ID", "Type", "Category", "Amount", "Date", "Description"]
+
+        table_data = [
+            [
+                i,
+                transaction[4],
+                transaction[1],
+                transaction[0],
+                transaction[3],
+                transaction[2],
+            ]
+            for i, transaction in enumerate(self.transactions, 1)
+        ]
+
+        print(tabulate(table_data, headers=headers, tablefmt="fancy_grid"))
 
         while True:
             transaction_id = input(
