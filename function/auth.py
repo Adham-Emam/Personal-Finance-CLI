@@ -2,9 +2,9 @@ import os
 import json
 import re
 import bcrypt
-import subprocess
 import getpass
 import tempfile
+from utils.currencies import currencies
 
 
 class Authenticator:
@@ -54,9 +54,7 @@ class Authenticator:
 
     def validate_email(self, email: str) -> bool:
         # simple regex, sufficient for CLI validation
-        return bool(
-            re.fullmatch(r"[^@]+@[^@]+\.[^@]+", email.strip().lower())
-        )
+        return bool(re.fullmatch(r"[^@]+@[^@]+\.[^@]+", email.strip().lower()))
 
     def validate_password(self, password: str) -> bool:
         return len(password) >= 8
@@ -72,16 +70,32 @@ class Authenticator:
         # if profile already completed in users.json and profile file exists, do nothing
         profile_dir = os.path.join("database", username)
         profile_path = os.path.join(profile_dir, "profile.json")
-        if user.get("first_name") and user.get("last_name") and os.path.exists(profile_path):
+        if (
+            user.get("first_name")
+            and user.get("last_name")
+            and user.get("currency")
+            and os.path.exists(profile_path)
+        ):
             return
 
         print("Complete your profile (first time login)")
+        # add verfication for firstName and lastName
         first_name = input("First name: ").strip()
         last_name = input("Last name: ").strip()
+
+        while True:
+            currency = (
+                input("Currency (USD, EUR, etc): ").upper().strip() or "USD"
+            )  # default currency USD
+            if currency and currency in currencies:
+                break
+            else:
+                print("Invalid currency. Try again.")
 
         # update users.json entry
         user["first_name"] = first_name
         user["last_name"] = last_name
+        user["currency"] = currency
         users[username] = user
         self.save_users(users)
 
@@ -90,7 +104,7 @@ class Authenticator:
         profile_data = {
             "first_name": first_name,
             "last_name": last_name,
-            "email": user.get("email", "")
+            "email": user.get("email", ""),
         }
 
         fd, tmp_path = tempfile.mkstemp(dir=profile_dir)
