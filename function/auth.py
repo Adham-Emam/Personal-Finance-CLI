@@ -105,6 +105,7 @@ class Authenticator:
             "first_name": first_name,
             "last_name": last_name,
             "email": user.get("email", ""),
+            "currency": currency,
         }
 
         fd, tmp_path = tempfile.mkstemp(dir=profile_dir)
