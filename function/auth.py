@@ -68,18 +68,17 @@ class Authenticator:
         user = users.get(username, {})
 
         # if profile already completed in users.json and profile file exists, do nothing
-        profile_dir = os.path.join("database", username)
-        profile_path = os.path.join(profile_dir, "profile.json")
         if (
-            user.get("first_name")
+            users
+            and user.get("first_name")
             and user.get("last_name")
             and user.get("currency")
-            and os.path.exists(profile_path)
+            and os.path.exists(self.users_file)
         ):
             return
 
         print("Complete your profile (first time login)")
-        # add verfication for firstName and lastName
+        # add verification for firstName and lastName
         first_name = input("First name: ").strip()
         last_name = input("Last name: ").strip()
 
@@ -98,26 +97,6 @@ class Authenticator:
         user["currency"] = currency
         users[username] = user
         self.save_users(users)
-
-        # ensure user folder exists and write profile.json atomically
-        os.makedirs(profile_dir, exist_ok=True)
-        profile_data = {
-            "first_name": first_name,
-            "last_name": last_name,
-            "email": user.get("email", ""),
-            "currency": currency,
-        }
-
-        fd, tmp_path = tempfile.mkstemp(dir=profile_dir)
-        try:
-            with os.fdopen(fd, "w") as tmp:
-                json.dump(profile_data, tmp, indent=2)
-            os.replace(tmp_path, profile_path)
-        finally:
-            if os.path.exists(tmp_path):
-                os.remove(tmp_path)
-
-        print(f"Profile saved to {profile_path}.")
 
     # ---------- Register ----------
     def register(self):
