@@ -8,6 +8,7 @@ from function.view_balance import ViewBalance
 from function.transactions.transaction_history import TransactionHistory
 from function.transactions.edit_transaction import EditTransaction
 from function.transactions.delete_transaction import DeleteTransaction
+from function.settings import Settings
 
 
 class MainMenu:
@@ -74,7 +75,7 @@ class MainMenu:
             case "7":
                 print("Reports")
             case "8":
-                print("Settings")
+                self.settings()
             case "9":
                 self.help_menu()
 
@@ -146,7 +147,16 @@ class MainMenu:
         print("Reports - coming soon...")
 
     def settings(self):
-        print("Settings - coming soon...")
+        """
+        Opens the Settings submenu.
+
+        This menu item will allow the user to edit their profile information, change their password, reset all data, or return to the main menu.
+
+        Returns:
+        None
+        """
+        settings = Settings(self.username)
+        settings.run()
 
     def help_menu(self):
         """
