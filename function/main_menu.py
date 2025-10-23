@@ -8,6 +8,7 @@ from function.view_balance import ViewBalance
 from function.transactions.transaction_history import TransactionHistory
 from function.transactions.edit_transaction import EditTransaction
 from function.transactions.delete_transaction import DeleteTransaction
+from function.reports import Reports
 
 
 class MainMenu:
@@ -72,7 +73,7 @@ class MainMenu:
             case "6":
                 self.delete_transaction()
             case "7":
-                print("Reports")
+                Reports(self.username).run()
             case "8":
                 print("Settings")
             case "9":
