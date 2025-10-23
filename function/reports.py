@@ -3,6 +3,7 @@ import csv
 from function.menu_navigator import MenuNavigator
 from datetime import datetime
 from function.menu_navigator import MenuNavigator
+import time
 
 
 class Reports:
@@ -61,11 +62,15 @@ class Reports:
 
         except ValueError:
             print("Invalid input. Using current month and year.")
+            time.sleep(2)
+            self.clear_screen()
             month = now.month
             year = now.year
 
-        if not (1 <= month <= 12) or year >= now.year:
+        if not (1 <= month <= 12) or year <= now.year:
             print("Invalid month or year. Using current month and year.")
+            time.sleep(2) 
+            self.clear_screen()
             month = now.month
             year = now.year
 
@@ -159,21 +164,17 @@ class Reports:
         match choice:
             case "1":
                 self.monthly_summary()
-                input("\nPress Enter to continue...")
             case "2":
                 self.category_summary()
-                input("\nPress Enter to continue...")
             case "3":
                 self.financial_health_report()
-                input("\nPress Enter to continue...")
             case "4":
                 self.recurring_transactions()
-                input("\nPress Enter to continue...")
             case "5":
                 return False
             case _:
                 print("Invalid choice. Please try again.")
-                input("\nPress Enter to continue...")
+        input("Press Enter to continue...")
         return True
 
     def run(self):
