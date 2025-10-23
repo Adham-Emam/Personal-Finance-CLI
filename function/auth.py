@@ -170,11 +170,11 @@ class Authenticator:
 
     # ---------- Login ----------
     def login(self, max_attempts: int = 3):
-        self.clear_screen()
         users = self.load_users()
         print("Login (use username or email)")
         attempts = 0
         while attempts < max_attempts:
+            self.clear_screen()
             identifier = input("Username or email: ").strip()
             password = getpass.getpass("Password: ")
             # find by username or email
@@ -188,6 +188,7 @@ class Authenticator:
                         break
             if not found_username:
                 print("No such user. Try again.")
+                input("Press Enter to continue...")
                 attempts += 1
                 continue
             user_meta = users.get(found_username, {})
@@ -199,9 +200,10 @@ class Authenticator:
                 return found_username
             else:
                 print("Incorrect password.")
+                input("Press Enter to continue...")
                 attempts += 1
 
-        print("Maximum login attempts reached.")
+        input("Maximum login attempts reached.")
         return None
 
     # ---------- Combined flow ----------

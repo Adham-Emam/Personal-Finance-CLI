@@ -49,18 +49,27 @@ class Reports:
         income_total=0
         expenses_total=0
         now=datetime.now()
-        last_month=now.month-1 if now.month>1 else 12
-        last_month_year=now.year if now.month>1 else now.year-1
+        try:
+            month=int(input("Enter month (1-12) or press Enter for current month: ") or now.month)
+            year=int(input("Enter year or press Enter for current year: ") or now.year)
+        except ValueError :
+            print("Invalid input. Using current month and year.")
+            month=now.month
+            year=now.year
+        if not (1<=month<=12)or year>=now.year:
+            print("Invalid month or year. Using current month and year.")
+            month=now.month
+            year=now.year
         for row in transactions:
             date=row["date"]
-            if date.month==last_month and date.year==last_month_year:
+            if date.month==month and date.year==year:
                 amount=row["amount"]
                 if row["type"]=="income":
                     income_total+=amount
                 elif row["type"]=="expense":
                     expenses_total+=amount
         net_total=income_total-expenses_total
-        print(f"Monthly Summary for {last_month}/{last_month_year}:")
+        print(f"Monthly Summary for {month}/{year}:")
         print(f"Total income: ${income_total:.2f}")
         print(f"Total expenses: ${expenses_total:.2f}")
         print(f"Net total: ${net_total:.2f}")
