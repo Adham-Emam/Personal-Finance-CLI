@@ -239,6 +239,13 @@ class Reports:
         return True
 
     def run(self):
+        self.clear_screen()
+        transactions = self.read_transactions()
+        if not transactions:
+            print("No transactions found, Please add transactions first.")
+            time.sleep(2)
+            return
+
         while True:
             print("\n--- Reports Menu ---")
             print("")

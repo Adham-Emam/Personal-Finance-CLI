@@ -52,10 +52,10 @@ class AddIncome:
             amount = input("Enter the amount of the transaction: ").strip()
             try:
                 amount = int(amount)
-                if amount <= 0:
+                if amount < 0:
                     print("Amount must be greater than zero.")
-                else:
-                    return amount
+                    continue
+                return amount
             except ValueError:
                 print("Invalid input. Please enter a numeric value.")
 
