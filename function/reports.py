@@ -113,11 +113,6 @@ class Reports:
             f"\n     Net : {'█'* int(net_total/max_value * 40 )} ${net_total:.2f}",
             style="bold green",
         )
-
-        # print(f"Monthly Summary for {month}/{year}:")
-        # print(f"Total income: ${income_total:.2f}")
-        # print(f"Total expenses: ${expenses_total:.2f}")
-        # print(f"Net total: ${net_total:.2f}")
         return income_total, expenses_total, net_total
 
     def category_summary(self):
@@ -170,14 +165,6 @@ class Reports:
             style="bold yellow",
         )
         console.print(table)
-
-        #     if row["category"] == category:
-        #         amount = row["amount"]
-        #         total += amount
-        # if total == 0:
-        #     print(f"no transactions were found for {category} category")
-        # else:
-        #     print(f"Total for category: {category} is : ${total:.2f}")
 
     def financial_health_report(self):
         """financial health report"""
