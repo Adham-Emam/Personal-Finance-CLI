@@ -69,19 +69,16 @@ class Reports:
                 input("Enter year or press Enter for current year: ") or now.year
             )
 
+            if month < 1 or month > 12:
+                raise ValueError()
+
         except ValueError:
-            print("Invalid input. Using current month and year.")
+            print("Invalid month or year. Using current month and year.")
             time.sleep(2)
-            self.clear_screen()
             month = now.month
             year = now.year
 
-        if not (1 <= month <= 12) or year <= now.year:
-            print("Invalid month or year. Using current month and year.")
-            time.sleep(2)
-            self.clear_screen()
-            month = now.month
-            year = now.year
+        self.clear_screen()
 
         for row in transactions:
             date = row["date"]

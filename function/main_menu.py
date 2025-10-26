@@ -74,7 +74,7 @@ class MainMenu:
             case "6":
                 self.delete_transaction()
             case "7":
-                Reports(self.username).run()
+                self.reports()
             case "8":
                 self.settings()
             case "9":
@@ -145,7 +145,16 @@ class MainMenu:
         delete_transaction.run()
 
     def reports(self):
-        print("Reports - coming soon...")
+        """
+        Opens the Reports submenu.
+
+        This menu item will allow the user to view their financial data in various formats.
+
+        Returns:
+        None
+        """
+        reports = Reports(self.username)
+        reports.run()
 
     def settings(self):
         """
