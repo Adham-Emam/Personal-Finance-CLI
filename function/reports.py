@@ -4,6 +4,8 @@ from function.menu_navigator import MenuNavigator
 from datetime import datetime
 from function.menu_navigator import MenuNavigator
 import time
+from rich.console import Console
+from rich.table import Table
 
 
 class Reports:
@@ -50,6 +52,13 @@ class Reports:
         transactions = self.read_transactions()
         income_total = 0
         expenses_total = 0
+        console = Console()
+        table = Table(
+            title="Monthly summary report", show_lines=True, style="bold green"
+        )
+        table.add_column("Metric", justify="left", style="magenta")
+        table.add_column("Total", justify="right", style="cyan")
+
         now = datetime.now()
         try:
             month = int(
@@ -69,7 +78,7 @@ class Reports:
 
         if not (1 <= month <= 12) or year <= now.year:
             print("Invalid month or year. Using current month and year.")
-            time.sleep(2) 
+            time.sleep(2)
             self.clear_screen()
             month = now.month
             year = now.year
@@ -84,26 +93,78 @@ class Reports:
                     expenses_total += amount
 
         net_total = income_total - expenses_total
-        print(f"Monthly Summary for {month}/{year}:")
-        print(f"Total income: ${income_total:.2f}")
-        print(f"Total expenses: ${expenses_total:.2f}")
-        print(f"Net total: ${net_total:.2f}")
+        table.add_row("Total Income", f"${income_total:.2f}")
+        table.add_row("Total Expenses", f"${expenses_total:.2f}")
+        table.add_row("Net Total", f"${net_total:.2f}")
+        console.print(table)
+        max_value = max(income_total, expenses_total, abs(net_total))
+        console.print(
+            f"[bold yellow]Visual Representation for {month}/{year}:[/bold yellow]"
+        )
+        console.print(
+            f"\n  Income : {'█'* int(income_total/max_value * 40 )} ${income_total:.2f}",
+            style="bold green",
+        )
+        console.print(
+            f"\nExpenses : {'█'* int(expenses_total/max_value * 40 )} ${expenses_total:.2f}",
+            style="bold green",
+        )
+        console.print(
+            f"\n     Net : {'█'* int(net_total/max_value * 40 )} ${net_total:.2f}",
+            style="bold green",
+        )
         return income_total, expenses_total, net_total
 
     def category_summary(self):
         """category report"""
         self.clear_screen()
         transactions = self.read_transactions()
-        category = input("Enter your desired category: ").strip().lower()
-        total = 0
+        console = Console()
+        category_totals = {}
+        income_total = 0
+        expenses_total = 0
         for row in transactions:
-            if row["category"] == category:
-                amount = row["amount"]
-                total += amount
-        if total == 0:
-            print(f"no transactions were found for {category} category")
-        else:
-            print(f"Total for category: {category} is : ${total:.2f}")
+            amount = row["amount"]
+            if row["type"] == "income":
+                income_total += amount
+            elif row["type"] == "expense":
+                expenses_total += amount
+
+        net_total = income_total - expenses_total
+        for row in transactions:
+            category = row["category"]
+            amount = row["amount"]
+            t_type = row["type"]
+            if category not in category_totals:
+                category_totals[category] = {"income": 0, "expense": 0}
+
+            category_totals[category][t_type] += amount
+        table = Table(
+            title="Category Summary Report", show_lines=True, style="bold green"
+        )
+        table.add_column("Category", justify="left", style="magenta")
+        table.add_column("Income", justify="right", style="green")
+        table.add_column("Expense", justify="right", style="red")
+        table.add_column("Net", justify="right", style="cyan")
+
+        for category, data in category_totals.items():
+            income = data["income"]
+            expense = data["expense"]
+            net = income - expense
+            table.add_row(
+                category.capitalize(),
+                f"${income:.2f}",
+                f"${expense:.2f}",
+                f"${net:.2f}",
+            )
+        table.add_row(
+            "Total",
+            f"${income_total:.2f}",
+            f"${expenses_total:.2f}",
+            f"${net_total:.2f}",
+            style="bold yellow",
+        )
+        console.print(table)
 
     def financial_health_report(self):
         """financial health report"""
@@ -178,6 +239,13 @@ class Reports:
         return True
 
     def run(self):
+        self.clear_screen()
+        transactions = self.read_transactions()
+        if not transactions:
+            print("No transactions found, Please add transactions first.")
+            time.sleep(2)
+            return
+
         while True:
             print("\n--- Reports Menu ---")
             print("")
