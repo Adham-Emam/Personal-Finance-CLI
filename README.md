@@ -201,7 +201,11 @@ Remove transaction records.
 ### Prerequisites
 
 ```bash
-# Create a virtual enviroment :
+# Cloning the repo
+git clone git@github.com:Adham-Emam/Personal-Finance-CLI.git
+cd Personal-Finance-CLI
+
+# Create a virtual enviroment
 python3 -m venv .venv
 
 source .venv/bin/activate #for linux
@@ -213,8 +217,9 @@ pip install -r requirements.txt #while being in the same directory
 
 ```
 
-```bash
+### Runing the project
 
+```bash
 #for linux
 python3 main.py
 
